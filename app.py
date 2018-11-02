@@ -13,17 +13,17 @@ source = requests.get('http://quotes.toscrape.com/tag/inspirational/').text
 # Pass source into Beautiful Soup and parse html
 soup = BeautifulSoup(source, 'lxml')
 
-# Obain first quote from the parsed html
-quote = soup.find('div', class_='quote')
+# Obain all quotes in the parsed html by looping through list of matching tags
+for quote in soup.find_all('div', class_='quote'):
 
-# Obtain text of first quote
-quote_text = quote.find('span', class_='text').text
+    # Obtain quote
+    quote_text = quote.find('span', class_='text').text
 
-# Obtain auther of first quote
-quote_author = quote.find('small', class_='author').text
+    # Obtain auther of the quote
+    quote_author = quote.find('small', class_='author').text
 
-# Print quote
-print(quote_text)
+    # Print quote
+    print(quote_text)
 
-# Print author of quote
-print(quote_author)
+    # Print author of quote
+    print(quote_author)
