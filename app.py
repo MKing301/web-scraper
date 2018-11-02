@@ -16,5 +16,14 @@ soup = BeautifulSoup(source, 'lxml')
 # Obain first quote from the parsed html
 quote = soup.find('div', class_='quote')
 
-# Print formatted html quote
-print(quote.prettify())
+# Obtain text of first quote
+quote_text = quote.find('span', class_='text').text
+
+# Obtain auther of first quote
+quote_author = quote.find('small', class_='author').text
+
+# Print quote
+print(quote_text)
+
+# Print author of quote
+print(quote_author)
