@@ -7,10 +7,23 @@ html text.
 from bs4 import BeautifulSoup
 import requests
 import csv
+import logging
+
+# Create logger
+logger = logging.getLogger(__name__)
+
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
+
+file_handler = logging.FileHandler('webscraper_logfile.log')
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
 
 # Request to get text from web page
 try:
-    source = requests.get('httpw://quotes.toscrape.com/tag/inspirational/').text
+    source = requests.get('http://quotes.toscrape.com/tag/inspirational/').text
 
     # Pass source into Beautiful Soup and parse html
     soup = BeautifulSoup(source, 'lxml')
@@ -29,8 +42,8 @@ try:
         quote_author = quote.find('small', class_='author').text
 
         csv_writer.writerow([quote_text, quote_author])
-        
+
     csv_file.close()
 
 except Exception as e:
-    print(f'Exception: {e}')
+    logger.error(f'Exception: {e}')
